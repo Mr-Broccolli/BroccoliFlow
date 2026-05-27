@@ -4,7 +4,7 @@
 
 # 🥦 BroccoliFlow
 
-A lightweight Python automation tool that organizes files into categorized folders.
+A lightweight Python utility that scans folders, analyzes files, and generates organization reports.
 
 ## Features
 
