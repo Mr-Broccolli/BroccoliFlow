@@ -4,10 +4,13 @@ A lightweight Python automation tool that organizes files into categorized folde
 
 ## Features
 
-- Folder path validation
-- Automatic file organization (planned)
-- Duplicate file detection (planned)
-- Organization reports (planned)
+- Validate folder paths
+- Scan folder contents
+- Display folder structure
+- Count files and folders
+- Detect file types
+- Generate scan reports
+- Handle invalid paths gracefully
 
 ## Current Status
 
