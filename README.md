@@ -46,6 +46,11 @@ cd BroccoliFlow
 python main.py
 ```
 
+## 📚 Project Files
+
+- [CHANGELOG](./CHANGELOG.md)
+- [LICENSE](./LICENSE)
+
 ## Tech Stack
 
 - Python
