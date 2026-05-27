@@ -22,8 +22,11 @@ Currently supports:
 
 ## Screenshots
 
+### v1.0: Folder Validation
 ![Version 1.0](assets/screenshots/v1.0-folder-validation.png)
+### v1.1: Folder Analysis
 ![Version 1.1](assets/screenshots/v1.1-folder-analysis-1.png)
+### v1.1: Folder Summary
 ![Version 1.1](assets/screenshots/v1.1-folder-analysis-2.png)
 
 ## Roadmap
