@@ -1,3 +1,7 @@
+![Python](https://img.shields.io/badge/Python-3.14-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Version](https://img.shields.io/badge/version-v1.1.0-orange)
+
 # 🥦 BroccoliFlow
 
 A lightweight Python automation tool that organizes files into categorized folders.
