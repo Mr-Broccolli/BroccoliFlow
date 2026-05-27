@@ -17,6 +17,10 @@ Currently supports:
 
 - Folder existence validation
 
+## Screenshots
+
+![Version 1.0](assets/screenshots/v1.0-folder-validation.png)
+
 ## Roadmap
 
 ### v1.1
