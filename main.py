@@ -1,10 +1,17 @@
 from pathlib import Path
 
-folder_path = input("Enter folder path: ")
+print("=" * 40)
+print("BroccoliFlow v1.0")
+print("=" * 40)
 
-folder = Path(folder_path)
+while True:
+    folder_path = input("\nEnter folder path: ")
 
-if folder.exists():
-    print("Folder found!")
-else:
-    print("Folder does not exist.")
+    folder = Path(folder_path)
+
+    if folder.exists() and folder.is_dir():
+        print("\nFolder found")
+        print(f"\nSelected Folder:\n{folder}")
+        break
+
+    print("\nInvalid folder path. Please try again.")
