@@ -14,20 +14,21 @@ A lightweight Python automation tool that organizes files into categorized folde
 
 ## Current Status
 
-Version: v1.0
+Version: v1.1
 
 Currently supports:
 
 - Folder existence validation
+- Folder count and analysis
+- Fodler summary
 
 ## Screenshots
 
-### v1.0: Folder Validation
-![Version 1.0](assets/screenshots/v1.0-folder-validation.png)
-### v1.1: Folder Analysis
-![Version 1.1](assets/screenshots/v1.1-folder-analysis-1.png)
-### v1.1: Folder Summary
-![Version 1.1](assets/screenshots/v1.1-folder-analysis-2.png)
+<p align="center">
+  <img src="assets/screenshots/v1.0-folder-validation.png" width="58%"">
+  <img src="assets/screenshots/v1.1-folder-analysis-1.png" width="40%">
+  <img src="assets/screenshots/v1.1-folder-analysis-2.png" width="69%">
+</p>
 
 ## Roadmap
 
