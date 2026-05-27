@@ -32,19 +32,13 @@ Currently supports:
 
 ## Roadmap
 
-### v1.1
-- Scan folder contents
-
 ### v1.2
-- File type detection
-
-### v1.3
 - Automatic folder creation
 
-### v1.4
+### v1.3
 - File movement
 
-### v1.5
+### v1.4
 - Duplicate detection
 
 ## Installation
