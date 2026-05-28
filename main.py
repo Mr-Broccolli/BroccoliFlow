@@ -81,6 +81,7 @@ print(f"Files Found    : {len(files)}")
 print(f"Folders Found  : {len(folders)}")
 print(f"Total Items    : {len(files) + len(folders)}")
 print(f"Scan Time      : {scan_time:.4f} sec")
+print(f"Scan completed at: {time.strftime('%H:%M:%S')}")
 
 if file_types:
     print("\nFile Types Detected:")
