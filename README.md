@@ -8,23 +8,30 @@ A lightweight Python utility that scans folders, analyzes files, and generates o
 
 ## Features
 
-- Validate folder paths
-- Scan folder contents
-- Display folder structure
-- Count files and folders
-- Detect file types
-- Generate scan reports
-- Handle invalid paths gracefully
+- Validate folder paths before processing
+- Scan and analyze folder contents
+- Detect and categorize file types
+- Automatically organize files into category folders
+- Sort files into Images, Documents, Videos, Audio, Archives, Installation Media, and Misc categories
+- Generate organization previews before making changes
+- Display detailed scan and organization reports
+- Create only the folders that are needed
+- Preserve existing subfolders without modifying their contents
 
 ## Current Status
 
-Version: v1.1
+Version: v1.3
 
 Currently supports:
 
-- Folder existence validation
-- Folder count and analysis
-- Fodler summary
+- Folder validation
+- Folder scanning
+- File type analysis
+- Automatic file organization
+- Category based file sorting
+- Organization preview system
+- Detailed scan reports
+- Smart folder creation
 
 ## Screenshots
 
@@ -36,14 +43,29 @@ Currently supports:
 
 ## Roadmap
 
-### v1.2
-- Automatic folder creation
+### v1.0.0 ✅
+- Folder validation
 
-### v1.3
-- File movement
+### v1.1.0 ✅
+- Folder scanning
+- File analysis
 
-### v1.4
-- Duplicate detection
+### v1.2.0 ✅
+- File categorization preview
+
+### v1.3.0 ✅
+- Automatic file organization
+- Category folder creation
+
+### v1.4.0
+- Duplicate file protection
+- Collision handling
+
+### v1.5.0
+- Undo last organization
+
+### v2.0.0
+- GUI version
 
 ## Installation
 
@@ -62,6 +84,7 @@ python main.py
 
 - Python
 - pathlib
+- shutil
 
 ## Author
 
