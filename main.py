@@ -1,9 +1,61 @@
 from pathlib import Path
 import time
 from collections import Counter
+import shutil
+
+VERSION = "1.3.0"
+
+FILE_CATEGORIES = {
+    "Images": [
+        ".png", ".jpg", ".jpeg", ".gif",
+        ".webp", ".bmp", ".tiff", ".svg",
+        ".ico"
+    ],
+
+    "Documents": [
+        ".pdf", ".doc", ".docx",
+        ".txt", ".rtf",
+        ".xls", ".xlsx", ".csv",
+        ".ppt", ".pptx",
+        ".odt", ".ods", ".odp"
+    ],
+
+    "Videos": [
+        ".mp4", ".mkv", ".avi",
+        ".mov", ".wmv", ".flv",
+        ".webm", ".m4v"
+    ],
+
+    "Audio": [
+        ".mp3", ".wav", ".flac",
+        ".aac", ".ogg", ".m4a",
+        ".wma"
+    ],
+
+    "Archives": [
+        ".zip", ".rar", ".7z",
+        ".tar", ".gz", ".bz2",
+        ".xz"
+    ],
+
+    "Installation Media": [
+        ".exe", ".msi", ".msix",
+        ".msixbundle", ".appx",
+        ".appxbundle"
+    ]
+}
+
+
+def get_category(extension):
+    for category, extensions in FILE_CATEGORIES.items():
+        if extension in extensions:
+            return category
+
+    return "Misc"
+
 
 print("=" * 40)
-print("BroccoliFlow v1.1")
+print(f"BroccoliFlow v{VERSION}")
 print("=" * 40)
 
 while True:
@@ -61,7 +113,7 @@ scan_time = time.time() - start_time
 
 print("\nFolder Structure:\n")
 
-print(folder.name)
+print(f"[ROOT] {folder.name}")
 
 if not files and not folders:
     print("└── [EMPTY FOLDER]")
@@ -90,3 +142,114 @@ if file_types:
         print(f"{extension:<15} {count}")
 
 print("\nBroccoliFlow scan completed.")
+
+if not files:
+    print("\nNo files found to organize.")
+    exit()
+
+choice = input("\nPreview file organization? (Y/N): ").strip().lower()
+
+if choice == "y":
+
+    print("\n" + "=" * 40)
+    print("ORGANIZATION PREVIEW")
+    print("=" * 40)
+
+    category_counts = Counter()
+
+    file_destinations = []
+
+    for file in files:
+
+        extension = file.suffix.lower()
+
+        category = get_category(extension)
+
+        category_counts[category] += 1
+
+        destination_folder = folder / category
+
+        file_destinations.append(
+            (file, destination_folder)
+        )
+
+        print(
+            f"{file.name:<35} -> {destination_folder}"
+        )
+
+    print("\n" + "=" * 40)
+    print("ORGANIZATION SUMMARY")
+    print("=" * 40)
+
+    for category, count in sorted(category_counts.items()):
+        print(f"{category:<20} {count}")
+
+    print(f"\nTotal Files To Organize: {len(files)}")
+
+    print(
+        f"\nWARNING: This operation will move "
+        f"{len(files)} file(s)."
+    )
+
+    print("\nFolders That Will Be Created:")
+
+    for category in sorted(category_counts):
+        print(f"- {category}")
+
+    confirm = input(
+        "\nProceed with organization? (Y/N): "
+    ).strip().lower()
+
+    if confirm == "y":
+
+        print("\nCreating folders...", end="")
+        time.sleep(2)
+
+        folders_created = 0
+
+        for category in category_counts:
+
+            category_folder = folder / category
+
+            if not category_folder.exists():
+                category_folder.mkdir()
+                folders_created += 1
+
+        print(" Done!")
+
+        print("\nMoving files...", end="")
+        time.sleep(2)
+
+        moved_files = 0
+
+        for file, destination_folder in file_destinations:
+
+            destination_file = (
+                destination_folder / file.name
+            )
+
+            shutil.move(
+                str(file),
+                str(destination_file)
+            )
+
+            moved_files += 1
+
+        print(" Done!")
+        time.sleep(1)
+        print("\n" + "=" * 40)
+        print("ORGANIZATION REPORT")
+        print("=" * 40)
+
+        for category, count in sorted(category_counts.items()):
+            print(f"{category:<20} {count}")
+
+        print(f"\nFiles Moved      : {moved_files}")
+        print(f"Folders Created  : {folders_created}")
+        print(f"Completed At     : {time.strftime('%H:%M:%S')}")
+
+        print("\n" + "=" * 40)
+        print("ORGANIZATION COMPLETE")
+        print("=" * 40)
+
+        print("\nThank you for using BroccoliFlow.")
