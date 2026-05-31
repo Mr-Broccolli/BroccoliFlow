@@ -1,6 +1,7 @@
 from pathlib import Path
 import time
 from collections import Counter
+import shutil
 
 VERSION = "1.2.0"
 
@@ -152,6 +153,8 @@ if choice == "y":
 
     category_counts = Counter()
 
+    file_destinations = []
+
     for file in files:
 
         extension = file.suffix.lower()
@@ -160,9 +163,15 @@ if choice == "y":
 
         category_counts[category] += 1
 
-        destination = folder / category
+        destination_folder = folder / category
 
-        print(f"{file.name:<35} -> {destination}")
+        file_destinations.append(
+            (file, destination_folder)
+        )
+
+        print(
+            f"{file.name:<35} -> {destination_folder}"
+        )
 
     print("\n" + "=" * 40)
     print("ORGANIZATION SUMMARY")
@@ -173,7 +182,55 @@ if choice == "y":
 
     print(f"\nTotal Files To Organize: {len(files)}")
 
-    print("\nFolders That Would Be Created:")
+    print("\nFolders That Will Be Created:")
 
     for category in sorted(category_counts):
         print(f"- {category}")
+
+    confirm = input(
+        "\nProceed with organization? (Y/N): "
+    ).strip().lower()
+
+    if confirm == "y":
+
+        print("\nCreating folders...", end="")
+        time.sleep(2)
+
+        for category in category_counts:
+
+            category_folder = folder / category
+
+            category_folder.mkdir(exist_ok=True)
+
+        print(" Done!")
+
+        print("\nMoving files...", end="")
+        time.sleep(2)
+
+        moved_files = 0
+
+        for file, destination_folder in file_destinations:
+
+            destination_file = (
+                destination_folder / file.name
+            )
+
+            shutil.move(
+                str(file),
+                str(destination_file)
+            )
+
+            moved_files += 1
+
+        print(" Done!")
+        time.sleep(1)
+        print("\n" + "=" * 40)
+        print("ORGANIZATION REPORT")
+        print("=" * 40)
+
+        for category, count in sorted(category_counts.items()):
+            print(f"{category:<20} {count}")
+
+        print(f"\nFiles Moved: {moved_files}")
+
+        print("\nBroccoliFlow organization completed.")
