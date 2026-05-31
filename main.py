@@ -67,7 +67,7 @@ while True:
     folder = Path(folder_path)
 
     if folder.exists() and folder.is_dir():
-        print(" Done!")
+        print("Done!")
 
         print("\nFolder found.")
         print(f"\nSelected Folder:\n{folder}")
@@ -75,12 +75,12 @@ while True:
         time.sleep(1)
         break
 
-    print(" Error!")
+    print("Error!")
     print("\nInvalid folder path. Please try again.")
 
 print("\nScanning folder...", end="")
 time.sleep(1)
-print(" Done!")
+print("Done!")
 
 start_time = time.time()
 
@@ -215,7 +215,7 @@ if choice == "y":
                 category_folder.mkdir()
                 folders_created += 1
 
-        print(" Done!")
+        print("Done!")
 
         print("\nMoving files...", end="")
         time.sleep(2)
@@ -235,7 +235,7 @@ if choice == "y":
 
             moved_files += 1
 
-        print(" Done!")
+        print("Done!")
         time.sleep(1)
         print("\n" + "=" * 40)
         print("ORGANIZATION REPORT")
