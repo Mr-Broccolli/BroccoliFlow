@@ -143,6 +143,10 @@ if file_types:
 
 print("\nBroccoliFlow scan completed.")
 
+if not files:
+    print("\nNo files found to organize.")
+    exit()
+
 choice = input("\nPreview file organization? (Y/N): ").strip().lower()
 
 if choice == "y":
@@ -182,6 +186,11 @@ if choice == "y":
 
     print(f"\nTotal Files To Organize: {len(files)}")
 
+    print(
+        f"\nWARNING: This operation will move "
+        f"{len(files)} file(s)."
+    )
+
     print("\nFolders That Will Be Created:")
 
     for category in sorted(category_counts):
@@ -196,11 +205,15 @@ if choice == "y":
         print("\nCreating folders...", end="")
         time.sleep(2)
 
+        folders_created = 0
+
         for category in category_counts:
 
             category_folder = folder / category
 
-            category_folder.mkdir(exist_ok=True)
+            if not category_folder.exists():
+                category_folder.mkdir()
+                folders_created += 1
 
         print(" Done!")
 
@@ -231,6 +244,12 @@ if choice == "y":
         for category, count in sorted(category_counts.items()):
             print(f"{category:<20} {count}")
 
-        print(f"\nFiles Moved: {moved_files}")
+        print(f"\nFiles Moved      : {moved_files}")
+        print(f"Folders Created  : {folders_created}")
+        print(f"Completed At     : {time.strftime('%H:%M:%S')}")
 
-        print("\nBroccoliFlow organization completed.")
+        print("\n" + "=" * 40)
+        print("ORGANIZATION COMPLETE")
+        print("=" * 40)
+
+        print("\nThank you for using BroccoliFlow.")
