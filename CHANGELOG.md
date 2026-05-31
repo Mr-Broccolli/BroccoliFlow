@@ -17,7 +17,7 @@
 - Improved organization summaries
 
 
-## v1.2.0
+## v1.2.0 (Internal Milestone)
 
 ### Added
 - Folder content analysis
