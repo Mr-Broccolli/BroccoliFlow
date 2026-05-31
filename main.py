@@ -2,11 +2,46 @@ from pathlib import Path
 import time
 from collections import Counter
 
+VERSION = "1.2.0"
+
 FILE_CATEGORIES = {
-    "Images": [".png", ".jpg", ".jpeg", ".gif", ".webp"],
-    "Documents": [".pdf", ".docx", ".doc", ".txt", ".xlsx", ".pptx", ".xls"],
-    "Videos": [".mp4", ".mkv", ".avi", ".mov"],
-    "Audio": [".mp3", ".wav", ".flac"]
+    "Images": [
+        ".png", ".jpg", ".jpeg", ".gif",
+        ".webp", ".bmp", ".tiff", ".svg",
+        ".ico"
+    ],
+
+    "Documents": [
+        ".pdf", ".doc", ".docx",
+        ".txt", ".rtf",
+        ".xls", ".xlsx", ".csv",
+        ".ppt", ".pptx",
+        ".odt", ".ods", ".odp"
+    ],
+
+    "Videos": [
+        ".mp4", ".mkv", ".avi",
+        ".mov", ".wmv", ".flv",
+        ".webm", ".m4v"
+    ],
+
+    "Audio": [
+        ".mp3", ".wav", ".flac",
+        ".aac", ".ogg", ".m4a",
+        ".wma"
+    ],
+
+    "Archives": [
+        ".zip", ".rar", ".7z",
+        ".tar", ".gz", ".bz2",
+        ".xz"
+    ],
+
+    "Installation Media": [
+        ".exe", ".msi", ".msix",
+        ".msixbundle", ".appx",
+        ".appxbundle"
+    ]
 }
 
 
@@ -19,7 +54,7 @@ def get_category(extension):
 
 
 print("=" * 40)
-print("BroccoliFlow v1.2")
+print(f"BroccoliFlow v{VERSION}")
 print("=" * 40)
 
 while True:
@@ -125,13 +160,20 @@ if choice == "y":
 
         category_counts[category] += 1
 
-        print(f"{file.name:<35} -> {category}")
+        destination = folder / category
+
+        print(f"{file.name:<35} -> {destination}")
 
     print("\n" + "=" * 40)
     print("ORGANIZATION SUMMARY")
     print("=" * 40)
 
     for category, count in sorted(category_counts.items()):
-        print(f"{category:<15} {count}")
+        print(f"{category:<20} {count}")
 
     print(f"\nTotal Files To Organize: {len(files)}")
+
+    print("\nFolders That Would Be Created:")
+
+    for category in sorted(category_counts):
+        print(f"- {category}")
