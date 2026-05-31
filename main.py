@@ -116,14 +116,14 @@ print("\nFolder Structure:\n")
 print(f"[ROOT] {folder.name}")
 
 if not files and not folders:
-    print("└── [EMPTY FOLDER]")
+    print("-- [EMPTY FOLDER]")
 
 else:
     for subfolder in folders:
-        print(f"├── [DIR]  {subfolder.name}")
+        print(f"|-- [DIR]  {subfolder.name}")
 
     for file in files:
-        print(f"├── [FILE] {file.name}")
+        print(f"|-- [FILE] {file.name}")
 
 print("\n" + "=" * 40)
 print("SCAN SUMMARY")
