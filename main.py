@@ -2,8 +2,24 @@ from pathlib import Path
 import time
 from collections import Counter
 
+FILE_CATEGORIES = {
+    "Images": [".png", ".jpg", ".jpeg", ".gif", ".webp"],
+    "Documents": [".pdf", ".docx", ".doc", ".txt", ".xlsx", ".pptx", ".xls"],
+    "Videos": [".mp4", ".mkv", ".avi", ".mov"],
+    "Audio": [".mp3", ".wav", ".flac"]
+}
+
+
+def get_category(extension):
+    for category, extensions in FILE_CATEGORIES.items():
+        if extension in extensions:
+            return category
+
+    return "Misc"
+
+
 print("=" * 40)
-print("BroccoliFlow v1.1")
+print("BroccoliFlow v1.2")
 print("=" * 40)
 
 while True:
@@ -61,7 +77,7 @@ scan_time = time.time() - start_time
 
 print("\nFolder Structure:\n")
 
-print(folder.name)
+print(f"[ROOT] {folder.name}")
 
 if not files and not folders:
     print("└── [EMPTY FOLDER]")
@@ -90,3 +106,32 @@ if file_types:
         print(f"{extension:<15} {count}")
 
 print("\nBroccoliFlow scan completed.")
+
+choice = input("\nPreview file organization? (Y/N): ").strip().lower()
+
+if choice == "y":
+
+    print("\n" + "=" * 40)
+    print("ORGANIZATION PREVIEW")
+    print("=" * 40)
+
+    category_counts = Counter()
+
+    for file in files:
+
+        extension = file.suffix.lower()
+
+        category = get_category(extension)
+
+        category_counts[category] += 1
+
+        print(f"{file.name:<35} -> {category}")
+
+    print("\n" + "=" * 40)
+    print("ORGANIZATION SUMMARY")
+    print("=" * 40)
+
+    for category, count in sorted(category_counts.items()):
+        print(f"{category:<15} {count}")
+
+    print(f"\nTotal Files To Organize: {len(files)}")
