@@ -17,10 +17,12 @@ A lightweight Python utility that scans folders, analyzes files, and generates o
 - Display detailed scan and organization reports
 - Create only the folders that are needed
 - Preserve existing subfolders without modifying their contents
+- Automatic duplicate filename handling
+- Collision-free file organization
 
 ## Current Status
 
-Version: v1.3
+Version: v1.4.0
 
 Currently supports:
 
@@ -32,6 +34,7 @@ Currently supports:
 - Organization preview system
 - Detailed scan reports
 - Smart folder creation
+- Automatic duplicate file handling
 
 ## Screenshots
 
