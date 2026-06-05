@@ -1,6 +1,6 @@
-![Python](https://img.shields.io/badge/Python-3.14-blue)
+![Python](https://img.shields.io/badge/Python-3.14.5-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![Version](https://img.shields.io/badge/version-v1.1.0-orange)
+![Version](https://img.shields.io/badge/version-v1.3.0-orange)
 
 # 🥦 BroccoliFlow
 
@@ -39,9 +39,13 @@ Currently supports:
 ## Screenshots
 
 <p align="center">
-  <img src="assets/screenshots/v1.0-folder-validation.png" width="58%"">
-  <img src="assets/screenshots/v1.1-folder-analysis-1.png" width="40%">
-  <img src="assets/screenshots/v1.1-folder-analysis-2.png" width="69%">
+  <img src="assets/screenshots/v1.3-scan-summary.png" width="39%">
+  <img src="assets/screenshots/v1.3-organization-preview.png" width="50%">
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/v1.3-organization-summary.png" width="40%">
+  <img src="assets/screenshots/v1.3-organization-complete.png" width="40%">
 </p>
 
 ## Roadmap
