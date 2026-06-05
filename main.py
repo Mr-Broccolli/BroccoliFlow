@@ -258,6 +258,11 @@ if choice == "y":
             if destination_file != original_destination:
                 renamed_files += 1
 
+                print(
+                    f"\nDuplicate detected:"
+                    f"\n{file.name} -> {destination_file.name}"
+                )
+
             shutil.move(
                 str(file),
                 str(destination_file)
