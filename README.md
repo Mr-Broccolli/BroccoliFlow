@@ -1,6 +1,9 @@
 ![Python](https://img.shields.io/badge/Python-3.14.5-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Version](https://img.shields.io/badge/version-v1.3.0-orange)
+=======
+![Version](https://img.shields.io/badge/version-v1.4.0-orange)
+>>>>>>> Stashed changes
 
 # 🥦 BroccoliFlow
 
@@ -64,7 +67,7 @@ Currently supports:
 - Automatic file organization
 - Category folder creation
 
-### v1.4.0
+### v1.4.0 ✅
 - Duplicate file protection
 - Collision handling
 
