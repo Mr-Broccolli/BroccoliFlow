@@ -3,7 +3,7 @@ import time
 from collections import Counter
 import shutil
 
-VERSION = "1.3.0"
+VERSION = "1.4.0"
 
 FILE_CATEGORIES = {
     "Images": [
@@ -52,6 +52,29 @@ def get_category(extension):
             return category
 
     return "Misc"
+
+def get_available_filename(destination_file):
+
+    if not destination_file.exists():
+        return destination_file
+
+    stem = destination_file.stem
+    suffix = destination_file.suffix
+    parent = destination_file.parent
+
+    counter = 1
+
+    while True:
+
+        new_file = (
+            parent /
+            f"{stem} ({counter}){suffix}"
+        )
+
+        if not new_file.exists():
+            return new_file
+
+        counter += 1
 
 
 print("=" * 40)
@@ -221,12 +244,24 @@ if choice == "y":
         time.sleep(2)
 
         moved_files = 0
+        renamed_files = 0
 
         for file, destination_folder in file_destinations:
 
-            destination_file = (
+            original_destination = (
                 destination_folder / file.name
             )
+
+            destination_file = get_available_filename(
+                original_destination
+            )
+            if destination_file != original_destination:
+                renamed_files += 1
+
+                print(
+                    f"\nDuplicate detected:"
+                    f"\n{file.name} -> {destination_file.name}"
+                )
 
             shutil.move(
                 str(file),
@@ -246,6 +281,7 @@ if choice == "y":
 
         print(f"\nFiles Moved      : {moved_files}")
         print(f"Folders Created  : {folders_created}")
+        print(f"Duplicates Fixed : {renamed_files}")
         print(f"Completed At     : {time.strftime('%H:%M:%S')}")
 
         print("\n" + "=" * 40)

@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.4.0
+
+### Added
+- Duplicate filename protection
+- Automatic duplicate renaming
+- Duplicate reporting
+
+### Improved
+- Safer file organization
+- Collision-free file moves
+
+
 ## v1.3.0
 
 ### Added
