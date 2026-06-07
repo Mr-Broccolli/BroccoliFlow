@@ -86,7 +86,7 @@ def undo_last_operation(folder):
         return
     try:
         with open(log_file, "r") as file:
-            operation_log = json.load(file)
+            operation_log = json.load(file) 
     except json.JSONDecodeError:
         print("\nOperation log is corrupted.")
         return
@@ -105,6 +105,7 @@ def undo_last_operation(folder):
     time.sleep(1)
 
     restored_files = 0
+    skipped_files = 0
 
     for entry in operation_log:
 
@@ -123,6 +124,7 @@ def undo_last_operation(folder):
                 print(
                     f"\nSkipped: {source.name}"
                 )
+                skipped_files += 1
                 continue
 
             shutil.move(
@@ -139,11 +141,13 @@ def undo_last_operation(folder):
     print("=" * 40)
 
     print(f"Files Restored : {restored_files}")
+    print(f"Files Skipped  : {skipped_files}")
     print(
         f"Completed At   : "
         f"{time.strftime('%H:%M:%S')}"
     )
-    log_file.unlink()
+    if skipped_files == 0:
+        log_file.unlink()
 
 print("=" * 40)
 print(f"BroccoliFlow v{VERSION}")
@@ -393,3 +397,5 @@ if choice == "y":
         print("=" * 40)
 
         print("\nThank you for using BroccoliFlow.")
+    else:
+        print("\nOrganization cancelled.")
