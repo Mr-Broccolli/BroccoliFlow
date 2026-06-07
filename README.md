@@ -1,12 +1,14 @@
 ![Python](https://img.shields.io/badge/Python-3.14.5-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![Version](https://img.shields.io/badge/version-v1.4.0-orange)
+![Version](https://img.shields.io/badge/version-v1.5.0-orange)
 
 # 🥦 BroccoliFlow
 
 A lightweight Python utility that scans folders, analyzes files, and generates organization reports.
 
 ## Features
+### Undo System
+BroccoliFlow stores an operation log and can restore files to their original locations after organization.
 
 - Validate folder paths before processing
 - Scan and analyze folder contents
@@ -19,10 +21,11 @@ A lightweight Python utility that scans folders, analyzes files, and generates o
 - Preserve existing subfolders without modifying their contents
 - Automatic duplicate filename handling
 - Collision-free file organization
+- Can undo previous organizations without conflicts
 
 ## Current Status
 
-Version: v1.4.0
+Version: v1.5.0
 
 Currently supports:
 
@@ -35,6 +38,7 @@ Currently supports:
 - Detailed scan reports
 - Smart folder creation
 - Automatic duplicate file handling
+- Can undo past organizations
 
 ## Screenshots
 
@@ -68,7 +72,7 @@ Currently supports:
 - Duplicate file protection
 - Collision handling
 
-### v1.5.0
+### v1.5.0 ✅
 - Undo last organization
 
 ### v2.0.0
