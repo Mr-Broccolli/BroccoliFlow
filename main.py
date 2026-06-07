@@ -2,8 +2,9 @@ from pathlib import Path
 import time
 from collections import Counter
 import shutil
+import json
 
-VERSION = "1.4.0"
+VERSION = "1.5.0"
 
 FILE_CATEGORIES = {
     "Images": [
@@ -76,10 +77,95 @@ def get_available_filename(destination_file):
 
         counter += 1
 
+def undo_last_operation(folder):
+
+    log_file = folder / "broccoliflow_last_operation.json"
+
+    if not log_file.exists():
+        print("\nNo operation log found.")
+        return
+    try:
+        with open(log_file, "r") as file:
+            operation_log = json.load(file) 
+    except json.JSONDecodeError:
+        print("\nOperation log is corrupted.")
+        return
+
+    print(f"\nFiles Recorded: {len(operation_log)}")
+
+    confirm = input(
+        "\nUndo last organization? (Y/N): "
+    ).strip().lower()
+
+    if confirm != "y":
+        print("\nUndo cancelled.")
+        return
+
+    print("\nRestoring files...", end="")
+    time.sleep(1)
+
+    restored_files = 0
+    skipped_files = 0
+
+    for entry in operation_log:
+
+        source = Path(entry["source"])
+        destination = Path(entry["destination"])
+
+        if destination.exists():
+
+            source.parent.mkdir(
+                parents=True,
+                exist_ok=True
+            )
+
+            if source.exists():
+
+                print(
+                    f"\nSkipped: {source.name}"
+                )
+                skipped_files += 1
+                continue
+
+            shutil.move(
+                str(destination),
+                str(source)
+            )
+
+            restored_files += 1
+
+    print("Done!")
+
+    print("\n" + "=" * 40)
+    print("UNDO SUMMARY")
+    print("=" * 40)
+
+    print(f"Files Restored : {restored_files}")
+    print(f"Files Skipped  : {skipped_files}")
+    print(
+        f"Completed At   : "
+        f"{time.strftime('%H:%M:%S')}"
+    )
+    if skipped_files == 0:
+        log_file.unlink()
 
 print("=" * 40)
 print(f"BroccoliFlow v{VERSION}")
 print("=" * 40)
+
+print("\n1. Organize Files")
+print("2. Undo Last Organization")
+
+while True:
+
+    option = input(
+        "\nSelect Option (1-2): "
+    ).strip()
+
+    if option in ["1", "2"]:
+        break
+
+    print("Invalid option.")
 
 while True:
     folder_path = input("\nEnter folder path: ").strip()
@@ -90,10 +176,14 @@ while True:
     folder = Path(folder_path)
 
     if folder.exists() and folder.is_dir():
-        print("Done!")
+        print(" Done!")
 
         print("\nFolder found.")
         print(f"\nSelected Folder:\n{folder}")
+
+        if option == "2":
+            undo_last_operation(folder)
+            exit()
 
         time.sleep(1)
         break
@@ -103,7 +193,7 @@ while True:
 
 print("\nScanning folder...", end="")
 time.sleep(1)
-print("Done!")
+print(" Done!")
 
 start_time = time.time()
 
@@ -113,6 +203,9 @@ file_types = Counter()
 
 try:
     for item in sorted(folder.iterdir(), key=lambda x: x.name.lower()):
+
+        if item.name == "broccoliflow_last_operation.json":
+            continue
 
         if item.is_file():
             files.append(item)
@@ -235,16 +328,17 @@ if choice == "y":
             category_folder = folder / category
 
             if not category_folder.exists():
-                category_folder.mkdir()
+                category_folder.mkdir(exist_ok=True)
                 folders_created += 1
 
-        print("Done!")
+        print(" Done!")
 
         print("\nMoving files...", end="")
         time.sleep(2)
 
         moved_files = 0
         renamed_files = 0
+        operation_log = []
 
         for file, destination_folder in file_destinations:
 
@@ -268,9 +362,14 @@ if choice == "y":
                 str(destination_file)
             )
 
+            operation_log.append({
+                "source": str(file),
+                "destination": str(destination_file)
+            })
+
             moved_files += 1
 
-        print("Done!")
+        print(" Done!")
         time.sleep(1)
         print("\n" + "=" * 40)
         print("ORGANIZATION REPORT")
@@ -284,8 +383,19 @@ if choice == "y":
         print(f"Duplicates Fixed : {renamed_files}")
         print(f"Completed At     : {time.strftime('%H:%M:%S')}")
 
+        log_file = folder / "broccoliflow_last_operation.json"
+
+        with open(log_file, "w") as file:
+           json.dump(
+                operation_log,
+                file,
+                indent=4
+            )
+
         print("\n" + "=" * 40)
         print("ORGANIZATION COMPLETE")
         print("=" * 40)
 
         print("\nThank you for using BroccoliFlow.")
+    else:
+        print("\nOrganization cancelled.")
