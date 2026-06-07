@@ -331,7 +331,7 @@ if choice == "y":
                 category_folder.mkdir(exist_ok=True)
                 folders_created += 1
 
-        print("Done!")
+        print(" Done!")
 
         print("\nMoving files...", end="")
         time.sleep(2)
@@ -369,7 +369,7 @@ if choice == "y":
 
             moved_files += 1
 
-        print("Done!")
+        print(" Done!")
         time.sleep(1)
         print("\n" + "=" * 40)
         print("ORGANIZATION REPORT")
