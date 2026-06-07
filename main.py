@@ -84,9 +84,12 @@ def undo_last_operation(folder):
     if not log_file.exists():
         print("\nNo operation log found.")
         return
-
-    with open(log_file, "r") as file:
-        operation_log = json.load(file)
+    try:
+        with open(log_file, "r") as file:
+            operation_log = json.load(file)
+    except json.JSONDecodeError:
+        print("\nOperation log is corrupted.")
+        return
 
     print(f"\nFiles Recorded: {len(operation_log)}")
 
