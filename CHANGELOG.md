@@ -1,4 +1,24 @@
 # Changelog
+All notable changes to this project will be documented in this file.
+
+## v1.5.0
+
+### Added
+- Undo Last Organization feature
+- Operation logging system
+- JSON-based organization history
+- Undo summary reporting
+- Corrupted log detection
+- Skipped file protection
+- Menu-based startup interface
+
+### Improved
+- Safer file organization workflow
+- Recovery support after organization
+- Automatic cleanup of completed operation logs
+- Validation for startup menu selection
+- BroccoliFlow log file exclusion during scans
+
 
 ## v1.4.0
 
