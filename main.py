@@ -115,6 +115,13 @@ def undo_last_operation(folder):
                 exist_ok=True
             )
 
+            if source.exists():
+
+                print(
+                    f"\nSkipped: {source.name}"
+                )
+                continue
+
             shutil.move(
                 str(destination),
                 str(source)
