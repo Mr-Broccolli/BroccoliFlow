@@ -2,6 +2,7 @@ from pathlib import Path
 import time
 from collections import Counter
 import shutil
+import json
 
 VERSION = "1.4.0"
 
@@ -245,6 +246,7 @@ if choice == "y":
 
         moved_files = 0
         renamed_files = 0
+        operation_log = []
 
         for file, destination_folder in file_destinations:
 
@@ -268,6 +270,11 @@ if choice == "y":
                 str(destination_file)
             )
 
+            operation_log.append({
+                "source": str(file),
+                "destination": str(destination_file)
+            })
+
             moved_files += 1
 
         print("Done!")
@@ -283,6 +290,15 @@ if choice == "y":
         print(f"Folders Created  : {folders_created}")
         print(f"Duplicates Fixed : {renamed_files}")
         print(f"Completed At     : {time.strftime('%H:%M:%S')}")
+
+        log_file = folder / "broccoliflow_last_operation.json"
+
+        with open(log_file, "w") as file:
+           json.dump(
+                operation_log,
+                file,
+                indent=4
+            )
 
         print("\n" + "=" * 40)
         print("ORGANIZATION COMPLETE")
