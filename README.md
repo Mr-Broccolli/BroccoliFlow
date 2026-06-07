@@ -42,15 +42,26 @@ Currently supports:
 
 ## Screenshots
 
-<p align="center">
-  <img src="assets/screenshots/v1.3-scan-summary.png" width="39%">
-  <img src="assets/screenshots/v1.3-organization-preview.png" width="50%">
-</p>
+### Main Menu
 
-<p align="center">
-  <img src="assets/screenshots/v1.3-organization-summary.png" width="40%">
-  <img src="assets/screenshots/v1.3-organization-complete.png" width="40%">
-</p>
+![Main Menu](assets/screenshots/v1.5-main-menu.png)
+
+### Organization Preview
+
+![Organization Preview](assets/screenshots/v1.5-organization-preview.png)
+
+### Duplicate Protection
+
+![Duplicate Protection](assets/screenshots/v1.5-duplicate-protection.png)
+
+### Organization Report
+
+![Organization Report](assets/screenshots/v1.5-organization-report.png)
+
+### Undo System
+
+![Undo Process](assets/screenshots/v1.5-undo-process.png)
+![Undo Summary](assets/screenshots/v1.5-undo-summary.png)
 
 ## Roadmap
 
