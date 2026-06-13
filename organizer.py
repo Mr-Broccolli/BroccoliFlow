@@ -41,7 +41,7 @@ def organize_files(folder):
     except PermissionError:
         print("\nAccess denied.")
         print("BroccoliFlow cannot scan this folder.")
-        exit()
+        return
 
     scan_time = time.time() - start_time
 
@@ -79,7 +79,7 @@ def organize_files(folder):
 
     if not files:
         print("\nNo files found to organize.")
-        exit()
+        return
 
     choice = input("\nPreview file organization? (Y/N): ").strip().lower()
 
@@ -215,5 +215,8 @@ def organize_files(folder):
             print("=" * 40)
 
             print("\nThank you for using BroccoliFlow.")
+            input(
+                "\nPress Enter to continue, or Ctrl+C to exit..."
+            )
         else:
             print("\nOrganization cancelled.")
