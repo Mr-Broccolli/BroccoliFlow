@@ -72,5 +72,8 @@ def undo_last_operation(folder):
         f"Completed At   : "
         f"{time.strftime('%H:%M:%S')}"
     )
+    input(
+        "\nPress Enter to continue, or Ctrl+C to exit..."
+    )
     if skipped_files == 0:
         log_file.unlink()
