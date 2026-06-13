@@ -1,6 +1,6 @@
 VERSION = "1.6.0"
 
-FILE_CATEGORIES = {
+DEFAULT_CATEGORIES = {
     "Images": [
         ".png", ".jpg", ".jpeg", ".gif",
         ".webp", ".bmp", ".tiff", ".svg",

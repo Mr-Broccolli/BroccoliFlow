@@ -1,7 +1,7 @@
-from config import FILE_CATEGORIES
+from config import DEFAULT_CATEGORIES
 
 def get_category(extension):
-    for category, extensions in FILE_CATEGORIES.items():
+    for category, extensions in DEFAULT_CATEGORIES.items():
         if extension in extensions:
             return category
 
