@@ -23,7 +23,7 @@ The file **`test-data-generator.py`** generates a fresh testing environment fill
 When executed, the generator will:
 
 * Ask how many test files to create.
-* Create a new folder named **`test_sandbox`**.
+* Create a new folder named **`test_sandbox`** with a timestamp.
 * Generate the requested number of randomly named files.
 * Populate the folder with files of various supported extensions.
 
