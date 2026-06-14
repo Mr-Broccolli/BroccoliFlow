@@ -1,15 +1,14 @@
 from pathlib import Path
 import json
 import shutil
-import time
 
 def undo_last_operation(folder):
-
     log_file = folder / "broccoliflow_last_operation.json"
 
     if not log_file.exists():
         print("\nNo operation log found.")
         return
+        
     try:
         with open(log_file, "r") as file:
             operation_log = json.load(file) 
@@ -19,61 +18,41 @@ def undo_last_operation(folder):
 
     print(f"\nFiles Recorded: {len(operation_log)}")
 
-    confirm = input(
-        "\nUndo last organization? (Y/N): "
-    ).strip().lower()
+    confirm = input("\nUndo last organization? (Y/N): ").strip().lower()
 
     if confirm != "y":
         print("\nUndo cancelled.")
         return
 
-    print("\nRestoring files...", end="")
-    time.sleep(1)
+    print("\nRestoring files...")
 
     restored_files = 0
     skipped_files = 0
 
     for entry in operation_log:
-
         source = Path(entry["source"])
         destination = Path(entry["destination"])
 
-        if destination.exists():
+        if not destination.exists():
+            print(f"\nMissing from destination: {destination.name}")
+            skipped_files += 1
+            continue
 
-            source.parent.mkdir(
-                parents=True,
-                exist_ok=True
-            )
+        source.parent.mkdir(parents=True, exist_ok=True)
 
-            if source.exists():
+        if source.exists():
+            print(f"\nConflict at source: {source.name}")
+            skipped_files += 1
+            continue
 
-                print(
-                    f"\nSkipped: {source.name}"
-                )
-                skipped_files += 1
-                continue
-
-            shutil.move(
-                str(destination),
-                str(source)
-            )
-
-            restored_files += 1
-
-    print("Done!")
+        shutil.move(str(destination), str(source))
+        restored_files += 1
 
     print("\n" + "=" * 40)
     print("UNDO SUMMARY")
     print("=" * 40)
-
     print(f"Files Restored : {restored_files}")
     print(f"Files Skipped  : {skipped_files}")
-    print(
-        f"Completed At   : "
-        f"{time.strftime('%H:%M:%S')}"
-    )
-    input(
-        "\nPress Enter to continue, or Ctrl+C to exit..."
-    )
+    
     if skipped_files == 0:
         log_file.unlink()
