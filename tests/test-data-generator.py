@@ -48,22 +48,15 @@ def generate_dummies():
             file_count = int(
                 input("\nHow many test files would you like to generate? ")
             )
-
             if file_count > 0:
                 break
-
             print("\nPlease enter a number greater than 0.")
-
         except ValueError:
-
             print("\nPlease enter a valid number.")
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-
     target_dir = Path(f"test_sandbox_{timestamp}")
-
-    target_dir.mkdir()
-
+    target_dir.mkdir(exist_ok=True)
     print(f"\nGenerating {file_count} dummy files...", end=" ")
 
     for i in range(file_count):
