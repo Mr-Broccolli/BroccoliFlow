@@ -1,14 +1,13 @@
 from config import DEFAULT_CATEGORIES
 
-def get_category(extension):
-    for category, extensions in DEFAULT_CATEGORIES.items():
+def get_category(extension, active_categories):
+    for category, extensions in active_categories.items():
         if extension in extensions:
             return category
 
     return "Misc"
 
 def get_available_filename(destination_file):
-
     if not destination_file.exists():
         return destination_file
 
@@ -19,11 +18,7 @@ def get_available_filename(destination_file):
     counter = 1
 
     while True:
-
-        new_file = (
-            parent /
-            f"{stem} ({counter}){suffix}"
-        )
+        new_file = parent / f"{stem} ({counter}){suffix}"
 
         if not new_file.exists():
             return new_file

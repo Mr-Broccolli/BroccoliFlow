@@ -1,4 +1,5 @@
 from collections import Counter
+from categories import load_categories
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 import shutil
@@ -56,9 +57,11 @@ def organize_files(folder):
     category_counts = Counter()
     file_destinations = []
 
+    active_categories = load_categories()
+
     for file in files:
         extension = file.suffix.lower()
-        category = get_category(extension)
+        category = get_category(extension, active_categories)
         category_counts[category] += 1
         destination_folder = folder / category
         file_destinations.append((file, destination_folder))
