@@ -95,6 +95,7 @@ def organize_files(folder):
         }
 
     try:
+        start_move_time = time.time()
         with ThreadPoolExecutor(max_workers=8) as executor:
             futures = {executor.submit(process_file, task): task for task in file_destinations}
             
@@ -108,6 +109,8 @@ def organize_files(folder):
                 moved_files += 1
                 if result["renamed"]:
                     renamed_files += 1
+        move_time = time.time() - start_move_time
+        print(f"Transfer Time: {move_time:.4f} sec")
                     
     except Exception as error:
         print(f"\nCritical failure during transfer: {error}")
