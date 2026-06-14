@@ -4,47 +4,22 @@ from datetime import datetime
 from pathlib import Path
 
 EXTENSIONS = [
-    ".png",
-    ".jpg",
-    ".jpeg",
-    ".gif",
-    ".webp",
-    ".pdf",
-    ".docx",
-    ".doc",
-    ".txt",
-    ".csv",
-    ".xlsx",
-    ".xls",
-    ".pptx",
-    ".ppt",
-    ".mp4",
-    ".mkv",
-    ".avi",
-    ".mov",
-    ".mp3",
-    ".wav",
-    ".flac",
-    ".zip",
-    ".7z",
-    ".rar",
-    ".tar",
-    ".gz",
-    ".exe",
-    ".msi",
+    ".png", ".jpg", ".jpeg", ".gif", ".webp",
+    ".pdf", ".docx", ".doc", ".txt", ".csv",
+    ".xlsx", ".xls", ".pptx", ".ppt",
+    ".mp4", ".mkv", ".avi", ".mov",
+    ".mp3", ".wav", ".flac",
+    ".zip", ".7z", ".rar", ".tar", ".gz",
+    ".exe", ".msi",
 ]
 
-
 def generate_dummies():
-
     print("=" * 40)
     print("BroccoliFlow Test Data Generator")
     print("=" * 40)
 
     while True:
-
         try:
-
             file_count = int(
                 input("\nHow many test files would you like to generate? ")
             )
@@ -55,31 +30,23 @@ def generate_dummies():
             print("\nPlease enter a valid number.")
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    target_dir = Path(f"test_sandbox_{timestamp}")
+    
+    script_dir = Path(__file__).parent
+    target_dir = script_dir / f"test_sandbox_{timestamp}"
+    
     target_dir.mkdir(exist_ok=True)
+    
     print(f"\nGenerating {file_count} dummy files...", end=" ")
 
     for i in range(file_count):
-
         extension = random.choice(EXTENSIONS)
-
         random_name = "".join(
-            random.choices(
-                string.ascii_lowercase,
-                k=8
-            )
+            random.choices(string.ascii_lowercase, k=8)
         )
-
-        filename = (
-            target_dir /
-            f"test_{random_name}_{i}{extension}"
-        )
+        filename = target_dir / f"test_{random_name}_{i}{extension}"
 
         with open(filename, "w") as file:
-
-            file.write(
-                "DUMMY DATA FOR BROCCOLIFLOW STRESS TEST"
-            )
+            file.write("DUMMY DATA FOR BROCCOLIFLOW STRESS TEST")
 
     print("Done!")
 
@@ -96,7 +63,8 @@ def generate_dummies():
         "to test scanning, organization, duplicate protection, "
         "and the undo system."
     )
-
+    
+    input("\nPress Enter to exit...")
 
 if __name__ == "__main__":
     generate_dummies()
