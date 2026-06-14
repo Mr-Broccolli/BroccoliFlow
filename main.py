@@ -7,25 +7,15 @@ from undo import undo_last_operation
 from categories import category_menu
 
 def get_folder():
-
     while True:
-
-        folder_path = input(
-            "\nEnter folder path: "
-        ).strip()
-
+        folder_path = input("\nEnter folder path: ").strip()
         print("\nValidating folder...", end="")
-        time.sleep(1)
-
+        
         folder = Path(folder_path)
 
         if folder.exists() and folder.is_dir():
-
             print(" Done!")
-
-            print("\nFolder found.")
             print(f"\nSelected Folder:\n{folder}")
-
             return folder
 
         print(" Error!")
