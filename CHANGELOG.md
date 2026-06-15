@@ -1,6 +1,25 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## v1.6.0
+
+### Added
+- Concurrent file organization using ThreadPoolExecutor
+- Atomic rollback mechanism for failed operations
+- Performance tracking (Transfer Time)
+- Persistent JSON-based operation logging for undo functionality
+- Dynamic configuration directory handling
+- Strict filesystem existence validation for restoration
+
+### Improved
+- Structural refactor: decoupled business logic into modular components
+- Performance: removed artificial terminal delays
+- Reliability: implemented emergency rollback for partial failures
+- Data integrity: added file flushing (fsync) for category updates
+- Maintenance: isolated log files from scan targets to prevent recursion
+- User experience: streamlined category management and configuration persistence
+
+
 ## v1.5.0
 
 ### Added
