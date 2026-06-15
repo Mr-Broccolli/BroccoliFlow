@@ -1,6 +1,6 @@
 ![Python](https://img.shields.io/badge/Python-3.14.5-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![Version](https://img.shields.io/badge/version-v1.5.0-orange)
+![Version](https://img.shields.io/badge/version-v1.6.0-orange)
 
 # 🥦 BroccoliFlow
 
@@ -25,7 +25,7 @@ BroccoliFlow stores an operation log and can restore files to their original loc
 
 ## Current Status
 
-Version: v1.5.0
+Version: v1.6.0
 
 Currently supports:
 
@@ -39,6 +39,8 @@ Currently supports:
 - Smart folder creation
 - Automatic duplicate file handling
 - Can undo past organizations
+- Handles upto 2000 files gracefully under ~15 seconds
+- Rollback features
 
 ## Screenshots
 
@@ -85,6 +87,9 @@ Currently supports:
 
 ### v1.5.0 ✅
 - Undo last organization
+
+### v1.6.0 ✅
+- Major improvments
 
 ### v2.0.0
 - GUI version
