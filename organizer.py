@@ -1,16 +1,16 @@
 from collections import Counter
-from categories import load_categories
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 import shutil
 import time
-
+from pathlib import Path
+from categories import load_categories
 from utils import get_category, get_available_filename
 
-def organize_files(folder):
-    print("\nScanning folder...")
-    start_time = time.time()
-
+def organize_files(folder, dry_run=False):
+    """Organizes files in the specified folder."""
+    print(f"\nScanning: {folder}")
+    
     files = []
     folders = []
     file_types = Counter()
@@ -35,14 +35,11 @@ def organize_files(folder):
         print("BroccoliFlow cannot scan this folder.")
         return
 
-    scan_time = time.time() - start_time
-
     print("\n" + "=" * 40)
     print("SCAN SUMMARY")
     print("=" * 40)
     print(f"Files Found    : {len(files)}")
-    print(f"Folders Found  : {len(folders)}")
-    print(f"Scan Time      : {scan_time:.4f} sec")
+    print(f"Folders Found  : {len(folders)}")   
 
     if not files:
         print("\nNo files found to organize.")
@@ -58,13 +55,21 @@ def organize_files(folder):
     file_destinations = []
 
     active_categories = load_categories()
-
+    
     for file in files:
         extension = file.suffix.lower()
         category = get_category(extension, active_categories)
-        category_counts[category] += 1
+        
+        category_counts[category] += 1 
+        
         destination_folder = folder / category
         file_destinations.append((file, destination_folder))
+
+    if dry_run:
+        print("\n--- DRY RUN MODE: No files will be moved ---")
+        for file, dest in file_destinations:
+            print(f"[PREVIEW] {file.name} -> {dest.name}/{file.name}")
+        return
 
     print("\nCreating folders...")
     folders_created = 0

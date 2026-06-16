@@ -3,10 +3,11 @@ import json
 import shutil
 
 def undo_last_operation(folder):
+    """Reverses the last organization operation for the given folder."""
     log_file = folder / "broccoliflow_last_operation.json"
 
     if not log_file.exists():
-        print("\nNo operation log found.")
+        print(f"\nNo operation log found in {folder.name}")
         return
         
     try:
@@ -24,8 +25,7 @@ def undo_last_operation(folder):
         print("\nUndo cancelled.")
         return
 
-    print("\nRestoring files...")
-
+    print(f"\nRestoring {len(operation_log)} files...")
     restored_files = 0
     skipped_files = 0
 
