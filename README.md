@@ -1,6 +1,6 @@
 ![Python](https://img.shields.io/badge/Python-3.14.6-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![Version](https://img.shields.io/badge/version-v1.7.0-orange
+![Version](https://img.shields.io/badge/version-v1.7.0-orange)
 
 # 🥦 BroccoliFlow
 
