@@ -1,105 +1,129 @@
 # Changelog
-All notable changes to this project will be documented in this file.
 
-## v1.6.0
+All notable changes to this project are documented in this file.
+
+---
+
+## [1.7.0] - 2026-06-16
 
 ### Added
-- Concurrent file organization using ThreadPoolExecutor
-- Atomic rollback mechanism for failed operations
-- Performance tracking (Transfer Time)
-- Persistent JSON-based operation logging for undo functionality
-- Dynamic configuration directory handling
-- Strict filesystem existence validation for restoration
+
+* **Command-Line Interface (CLI)**: Implemented `argparse` to support terminal-based execution.
+* **Direct Execution Flags**: Introduced support for `--source`, `--organize`, and `--undo` to enable automation.
+* **Interrupt Handling**: Added robust `KeyboardInterrupt` management to ensure clean exits during terminal sessions.
 
 ### Improved
-- Structural refactor: decoupled business logic into modular components
-- Performance: removed artificial terminal delays
-- Reliability: implemented emergency rollback for partial failures
-- Data integrity: added file flushing (fsync) for category updates
-- Maintenance: isolated log files from scan targets to prevent recursion
-- User experience: streamlined category management and configuration persistence
 
+* **Architecture**: Decoupled the interactive UI from core logic, allowing for dual-mode execution (Menu vs. CLI).
+* **Automation**: Standardized flag behavior to integrate seamlessly with system task schedulers.
+* **Responsiveness**: Enhanced signal handling for better performance in non-interactive terminal environments.
 
-## v1.5.0
+> **TL;DR**: BroccoliFlow is now a professional CLI utility. You can bypass the menus and automate your file organization directly from your terminal.
+
+---
+
+## [1.6.0] - 2026-06-14
 
 ### Added
-- Undo Last Organization feature
-- Operation logging system
-- JSON-based organization history
-- Undo summary reporting
-- Corrupted log detection
-- Skipped file protection
-- Menu-based startup interface
+
+* **Concurrent File Operations**: Integrated `ThreadPoolExecutor` for high-performance, multi-threaded file movement.
+* **Atomic Rollback Mechanism**: Implemented safety checks to restore state if transfers fail.
+* **Performance Tracking**: Added real-time transfer speed measurements.
+* **Undo System**: Created a persistent JSON-based log system to track and reverse file moves.
+* **Configuration Management**: Moved state to a dedicated `config/` directory with filesystem flushing (`fsync`).
 
 ### Improved
-- Safer file organization workflow
-- Recovery support after organization
-- Automatic cleanup of completed operation logs
-- Validation for startup menu selection
-- BroccoliFlow log file exclusion during scans
 
+* **Structural Refactor**: Modularized logic into dedicated files (`organizer.py`, `undo.py`, `categories.py`).
+* **Data Integrity**: Forced OS buffer writes to prevent corruption during configuration changes.
+* **Resource Management**: Excluded logs from scan targets to prevent infinite recursive loops.
 
-## v1.4.0
+> **TL;DR**: Major speed and safety upgrade. Concurrent moves make it fast; atomic rollbacks and undo history make it bulletproof.
+
+---
+
+## [1.5.0] - 2026-06-10
 
 ### Added
-- Duplicate filename protection
-- Automatic duplicate renaming
-- Duplicate reporting
+
+* **Undo Functionality**: Implemented the first iteration of the "Undo Last Organization" feature.
+* **Logging**: Automated creation of operation history logs.
+* **Startup Interface**: Introduced a menu-based system for easier navigation.
 
 ### Improved
-- Safer file organization
-- Collision-free file moves
 
+* **Workflow Safety**: Added validation for all user menu inputs.
+* **Recovery**: Enhanced file management to support post-organization restoration.
 
-## v1.3.0
+> **TL;DR**: Added the "undo" button. You can now recover from mistakes with a structured log-based restoration system.
+
+---
+
+## [1.4.0] - 2026-06-05
 
 ### Added
-- Automatic file organization
-- Category based file sorting
-- Category folder creation
-- Organization preview system
-- Archive file detection
-- Installation media detection
-- Organization reports
+
+* **Duplicate Protection**: Logic to detect and prevent overwriting existing files.
+* **Smart Renaming**: Automated sequential numbering for duplicate file collision resolution.
 
 ### Improved
-- Expanded file extension support
-- Better destination path preview
-- Improved organization summaries
 
+* **Safety**: Shifted from simple moves to collision-free path management.
 
-## v1.2.0 (Internal Milestone)
+> **TL;DR**: Files no longer vanish! If you have two files named the same, BroccoliFlow now handles them safely.
+
+---
+
+## [1.3.0] - 2026-06-01
 
 ### Added
-- Folder content analysis
-- File type detection
-- Organization preview system
-- File category classification
-- Analysis reports
+
+* **Category Sorting**: Implemented automatic folder-based categorization.
+* **Detection**: Added specific recognition for archive formats and installers.
+* **Reporting**: Added a summary report to show file counts after organization.
 
 ### Improved
-- Expanded file extension support
-- Better scan statistics
-- Root folder identification
 
+* **UX**: Provided clearer path previews before moving files.
 
-## v1.1.0
+> **TL;DR**: The "organizer" is now real. It sorts files into folders by type and gives you a summary of the work done.
+
+---
+
+## [1.2.0] - 2026-05-25
 
 ### Added
-- Folder scanning
-- Folder structure display
-- File and folder counting
-- File type detection
-- Scan summary reporting
+
+* **File Analysis**: Enabled basic folder scanning and type detection.
+* **Classification**: Added initial logical grouping for files.
 
 ### Improved
-- Better folder validation messages
-- Alphabetical sorting
-- Permission error handling
 
+* **Metrics**: Enhanced scan statistics for better user visibility.
 
-## v1.0.0
+> **TL;DR**: The engine learned how to "read" your folder contents and group them logically.
+
+---
+
+## [1.1.0] - 2026-05-20
 
 ### Added
-- Folder path validation
-- Basic command line interface
+
+* **Scan Engine**: Initial folder structure navigation and file counting.
+* **Validation**: Added basic error handling for access permissions.
+
+### Improved
+
+* **Formatting**: Enabled alphabetical sorting for scan reports.
+
+> **TL;DR**: The foundation. It can look at a folder and tell you exactly what is inside.
+
+---
+
+## [1.0.0] - 2026-05-15
+
+### Added
+
+* **Initial Release**: Basic path validation and CLI setup.
+
+> **TL;DR**: The first version. It confirms the folder exists and is ready to start working.
