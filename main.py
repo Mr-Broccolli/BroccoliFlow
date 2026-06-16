@@ -62,7 +62,7 @@ def main():
             return
 
         if args.organize:
-            organize_files(folder)
+            organize_files(folder, dry_run=args.dry_run)
         elif args.undo:
             undo_last_operation(folder)
         return
