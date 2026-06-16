@@ -86,7 +86,7 @@ Version: v1.7.0
 
 ### v1.8.0
 
-* Advanced logging system.
+* Advanced logging system for debugging.
 
 ### v1.9.0
 
