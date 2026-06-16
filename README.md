@@ -76,13 +76,9 @@ Version: v1.7.0
 
 ## Roadmap
 
-### v1.0.0 - v1.6.0 ✅
+### v1.0.0 - v1.7.0 ✅
 
-* Core engine, concurrency, and undo system implemented.
-
-### v1.7.0 ✅
-
-* CLI architecture and dry-run functionality implemented.
+* Concurrency, undo system, CLI architecture and  dry-run functionality implemented.
 
 ### v1.8.0
 
