@@ -7,6 +7,7 @@ from categories import category_menu
 from config import VERSION
 
 def run_menu():
+    logger.info("User entered interactive menu.")
     """Main interactive menu logic."""
     print("=" * 40)
     print(f"BroccoliFlow v{VERSION}")
@@ -37,6 +38,7 @@ def run_menu():
         elif option == "3":
             category_menu()
         elif option == "4":
+            logger.info("User exited via menu.")
             print("\nGoodbye!")
             break
         else:
