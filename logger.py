@@ -13,3 +13,6 @@ def setup_logger():
         datefmt="%Y-%m-%d %H:%M:%S"
     )
     return logging.getLogger("BroccoliFlow")
+
+
+logger = setup_logger()
