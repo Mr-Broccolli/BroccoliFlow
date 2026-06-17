@@ -1,10 +1,12 @@
 import argparse
+from logger import setup_logger, logger 
 from pathlib import Path
 from organizer import organize_files
 from undo import undo_last_operation
 from categories import category_menu
 from config import VERSION
 
+logger = setup_logger()
 def run_menu():
     """Main interactive menu logic."""
     print("=" * 40)
