@@ -1,5 +1,6 @@
 import argparse
-from logger import logger 
+from logger import logger
+from logger import logger, set_debug_level
 from pathlib import Path
 from organizer import organize_files
 from undo import undo_last_operation
@@ -45,6 +46,8 @@ def run_menu():
             print("\nInvalid option.")
 
 def main():
+    parser = argparse.ArgumentParser(description="BroccoliFlow - Automated File Organizer")
+    parser.add_argument("--debug", action="store_true", help="Enable verbose debug logging")
     logger.info("BroccoliFlow started.")
     """Main application controller."""
     parser = argparse.ArgumentParser(description="BroccoliFlow - Automated File Organizer")
@@ -55,6 +58,10 @@ def main():
     parser.add_argument("--undo", action="store_true", help="Undo the last organization")
     #v1.8.0 placeholder
     parser.add_argument("--dry-run", action="store_true", help="Preview changes without moving files")
+    args = parser.parse_args()
+    if args.debug:
+        set_debug_level(True)
+        logger.info("Debug mode enabled.")
 
     args = parser.parse_args()
 
