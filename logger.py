@@ -5,23 +5,27 @@ LOG_DIR = Path("logs")
 LOG_FILE = LOG_DIR / "broccoliflow.log"
 
 def setup_logger(debug=False):
+    """Initializes and configures the global logger."""
     LOG_DIR.mkdir(exist_ok=True)
     
-    logger = logging.getLogger("BroccoliFlow")
+    app_logger = logging.getLogger("BroccoliFlow")
     
-    # Set level based on debug toggle
+    #set level based on debug toggle
     level = logging.DEBUG if debug else logging.INFO
-    logger.setLevel(level)
+    app_logger.setLevel(level)
     
-    if not logger.handlers:
-        file_handler = logging.FileHandler(LOG_FILE)
+    #prevent duplicate handlers
+    if not app_logger.handlers:
+        file_handler = logging.FileHandler(LOG_FILE, encoding='utf-8')
         formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
         file_handler.setFormatter(formatter)
-        logger.addHandler(file_handler)
+        app_logger.addHandler(file_handler)
         
-    return logger
+    return app_logger
 
+#initialize global instance
 logger = setup_logger(debug=False)
-# Add this function to logger.py
+
 def set_debug_level(debug):
+    """Dynamically changes the logging level at runtime."""
     logger.setLevel(logging.DEBUG if debug else logging.INFO)
