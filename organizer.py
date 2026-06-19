@@ -4,10 +4,11 @@ import time
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+from typing import Any, Dict, List, Tuple
 from logger import logger
 from categories import load_categories
 from utils import get_category, get_available_filename
-def organize_files(folder, dry_run=False):
+def organize_files(folder: Path, dry_run: bool = False, max_workers: int = 8) -> None:
     """Organizes files in the specified folder with concurrency and logging."""
     logger.info(f"Starting organization scan on: {folder.absolute()}")
     print(f"\nScanning: {folder}")
@@ -84,12 +85,12 @@ def organize_files(folder, dry_run=False):
             folders_created += 1
 
     print("\nMoving files concurrently...")
-    logger.info(f"Initiating concurrent transfer for {len(files)} files.")
+    logger.info(f"Initiating concurrent transfer for {len(files)} files with {max_workers} workers.")
     moved_files = 0
     renamed_files = 0
     operation_log = []
     
-    def process_file(task_data):
+    def process_file(task_data: Tuple[Path, Path]) -> Dict[str, Any]:
         """Worker function for concurrent file processing."""
         source_file, dest_folder = task_data
         original_destination = dest_folder / source_file.name
@@ -115,25 +116,35 @@ def organize_files(folder, dry_run=False):
 
     try:
         start_move_time = time.time()
-        with ThreadPoolExecutor(max_workers=8) as executor:
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
             futures = {executor.submit(process_file, task): task for task in file_destinations}
-            
+
+            completed = 0
             for future in as_completed(futures):
                 result = future.result()
-                
+
                 if result["error"]:
                     raise RuntimeError(f"Transfer error on {result['source']}: {result['error']}")
-                
+
                 operation_log.append({
                     "source": result["source"],
                     "destination": result["destination"]
                 })
-                
+
                 moved_files += 1
                 if result["renamed"]:
                     logger.debug(f"Duplicate resolved: {Path(result['source']).name} renamed.")
                     renamed_files += 1
-                    
+
+                # Progress reporting
+                completed += 1
+                if completed % 10 == 0 or completed == len(file_destinations):
+                    progress = (completed / len(file_destinations)) * 100
+                    print(f"\rProgress: {completed}/{len(file_destinations)} files ({progress:.1f}%)", end="", flush=True)
+
+            # Clear progress line and move to next line
+            print()  # New line after progress
+
         move_time = time.time() - start_move_time
         logger.info(f"Transfer complete in {move_time:.4f} sec.")
         print(f"Transfer Time: {move_time:.4f} sec")
