@@ -1,15 +1,43 @@
 import json
 from pathlib import Path
+from typing import Dict, List
 from config import DEFAULT_CATEGORIES
 
 CONFIG_DIR = Path("config")
 CONFIG_FILE = CONFIG_DIR / "categories.json"
 
+
+def _validate_categories(categories: Dict[str, List[str]]) -> bool:
+    """Validate categories configuration structure.
+
+    Args:
+        categories: Dictionary mapping category names to lists of file extensions
+
+    Returns:
+        True if valid, False otherwise
+    """
+    if not isinstance(categories, dict):
+        return False
+
+    for category, extensions in categories.items():
+        if not isinstance(category, str):
+            return False
+        if not isinstance(extensions, list):
+            return False
+        for ext in extensions:
+            if not isinstance(ext, str) or not ext.startswith('.'):
+                return False
+    return True
+
 def load_categories():
     if CONFIG_FILE.exists():
         try:
             with open(CONFIG_FILE, "r") as file:
-                return json.load(file)
+                categories = json.load(file)
+                if _validate_categories(categories):
+                    return categories
+                else:
+                    print("\nInvalid categories.json structure. Using default categories.")
         except json.JSONDecodeError:
             print("\nInvalid categories.json. Using default categories.")
 
