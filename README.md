@@ -17,8 +17,6 @@ A professional-grade, high-performance file management utility that scans direct
 
 * **Duplicate Protection**: Automatically detects filename collisions and resolves them with sequential renaming.
 
-
-
 ### Safety & Recovery
 
 * **Undo System**: Records every file move in a persistent JSON operation log, allowing for full restoration to original locations.
@@ -26,8 +24,6 @@ A professional-grade, high-performance file management utility that scans direct
 * **Atomic Rollback**: Automatically triggers an emergency restoration if an organization process is interrupted or fails.
 
 * **Dry-Run Mode**: Allows users to preview all proposed file movements without making any changes to the disk.
-
-
 
 ### Command-Line Interface
 
@@ -37,24 +33,33 @@ A professional-grade, high-performance file management utility that scans direct
 
 * **Robust Exits**: Implements safe `KeyboardInterrupt` handling for stable terminal sessions.
 
+### Developer Experience & Tooling
+
+* **Type Safety**: Full type hinting across the codebase for improved IDE support and static analysis.
+* **Configuration Validation**: Automatic validation of `categories.json` with fallback to defaults and informative error messages.
+* **Progress Reporting**: Real‑time console progress indicator (`Progress: X/Y files (Z%)`) during organization.
+* **Professional Logging**: Rotating file logs (5 MB per file, 5 backups) with enriched format and optional console debug output.
+* **CLI Enhancements**: `--max-workers` for adjustable parallelism, `--version` flag, improved help strings, and clean Ctrl+C handling.
+
 
 ## Current Status
 
 Version: v1.8.0
 
 * Folder validation & scanning
-
 * Multi-threaded file organization
-
 * Category-based sorting with custom configuration
-
 * Operation logging & atomic rollback
-
 * "Undo" restoration system
-
 * CLI automation with dry-run support
-
 * Performance-optimized (handles thousands of files efficiently)
+
+### New Features in v1.8.0
+* Type hints across all modules
+* Configuration validation with fallback
+* Real‑time progress reporting
+* Professional logging with rotation and debug console
+* Enhanced CLI (`--max-workers`, `--version`, better help, Ctrl+C handling)
 
 
 ## Screenshots
@@ -74,23 +79,25 @@ Version: v1.8.0
 </p>
 
 
+
 ## Roadmap
 
 ### v1.0.0 - v1.7.0 ✅
 
-* Concurrency, undo system, CLI architecture and  dry-run functionality implemented.
+* Concurrency, undo system, CLI architecture and dry-run functionality implemented.
 
-### v1.8.0
+### v1.8.0 ✅
 
-* Advanced logging system for debugging.
+* Type hints, CLI enhancements (`--max-workers`, `--version`, better help, Ctrl+C handling), configuration validation, progress reporting, professional logging system.
 
 ### v1.9.0
 
-* Configuration schema validation.
+* Extended configuration schema validation and migration tools.
 
 ### v2.0.0
 
 * Graphical User Interface (GUI) development.
+
 
 ## Installation
 
@@ -98,7 +105,6 @@ Version: v1.8.0
 git clone https://github.com/Mr-Broccoli/BroccoliFlow.git
 cd BroccoliFlow
 python main.py --source "path/to/directory" --organize
-
 ```
 
 ## 📚 Project Files
