@@ -1,6 +1,6 @@
 ![Python](https://img.shields.io/badge/Python-3.14.6-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![Version](https://img.shields.io/badge/version-v1.7.0-orange)
+![Version](https://img.shields.io/badge/version-v1.8.0-orange)
 
 # 🥦 BroccoliFlow
 
@@ -40,7 +40,7 @@ A professional-grade, high-performance file management utility that scans direct
 
 ## Current Status
 
-Version: v1.7.0
+Version: v1.8.0
 
 * Folder validation & scanning
 
