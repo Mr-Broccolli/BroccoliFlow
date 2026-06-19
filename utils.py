@@ -1,13 +1,15 @@
 from config import DEFAULT_CATEGORIES
+from typing import Dict, List
+from pathlib import Path
 
-def get_category(extension, active_categories):
+def get_category(extension: str, active_categories: Dict[str, List[str]]) -> str:
     for category, extensions in active_categories.items():
         if extension in extensions:
             return category
 
     return "Misc"
 
-def get_available_filename(destination_file):
+def get_available_filename(destination_file: Path) -> Path:
     if not destination_file.exists():
         return destination_file
 
