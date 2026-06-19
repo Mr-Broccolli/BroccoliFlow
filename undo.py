@@ -1,8 +1,9 @@
 from pathlib import Path
 import json
 import shutil
+from typing import Any, Dict, List
 
-def undo_last_operation(folder):
+def undo_last_operation(folder: Path) -> None:
     """Reverses the last organization operation for the given folder."""
     log_file = folder / "broccoliflow_last_operation.json"
 
