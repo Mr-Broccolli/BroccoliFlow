@@ -102,7 +102,7 @@ Version: v1.8.0
 ## Installation
 
 ```bash
-git clone https://github.com/Mr-Broccoli/BroccoliFlow.git
+git clone https://github.com/Mr-Broccolli/BroccoliFlow.git
 cd BroccoliFlow
 python main.py --source "path/to/directory" --organize
 ```
