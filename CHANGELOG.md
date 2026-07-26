@@ -4,6 +4,21 @@ All notable changes to this project are documented in this file.
 
 ---
 
+## [1.9.0] - 2026-07-26
+
+### Added
+* **Wait-and-Retry for locked files**: `_move_with_retry()` wraps `shutil.move`
+  with up to 3 automatic retries (500 ms apart) when a `PermissionError`
+  indicates another process holds the file lock. Each retry is logged, and
+  after exhausting attempts the exception propagates to trigger the existing
+  emergency rollback as before.
+
+> **TL;DR**: BroccoliFlow no longer panics when a file is temporarily locked
+> by another process. It waits, retries, and only rolls back if the lock
+> persists.
+
+---
+
 ## [1.8.0] - 2026-06-20
 
 ### Added

@@ -3,7 +3,7 @@
 ## 1. Project Identity
 
 **Project Name:** BroccoliFlow
-**Current Version:** 1.8.0 (defined in config.py)
+**Current Version:** 1.9.0 (defined in config.py)
 **Target Operating Systems:** Cross-platform (Windows, macOS, Linux). Heavily tested on Windows.
 **Programming Language:** Python 3.9+ (uses built-in generic types like `list`, `dict`, `tuple` from typing module)
 **Dependencies:** Zero external dependencies. Strictly Python Standard Library.
@@ -65,7 +65,7 @@ The codebase is modular and strictly separates the UI (CLI/Menu) from the busine
 
 ### `config.py`
 **Purpose:** Global constants.
-**Responsibilities:** Stores `VERSION = "1.8.0"`. Defines `DEFAULT_CATEGORIES` dictionary mapping categories to extension lists.
+**Responsibilities:** Stores `VERSION = "1.9.0"`. Defines `DEFAULT_CATEGORIES` dictionary mapping categories to extension lists.
 
 ### `config/categories.json`
 **Purpose:** User-configurable schema mapping extensions (like `.jpg`) to target folders (like `Images`).
@@ -91,6 +91,10 @@ The codebase is modular and strictly separates the UI (CLI/Menu) from the busine
 - Refactors: Passed global logger instances across modules to prevent double-logging. Added type hints across all modules.
 - Why: Multi-threaded file operations fail silently or create race conditions. A definitive audit trail was needed.
 
+### v1.9.0 (Sanity & Resilience) — 2026-07-26
+- Features: Added `_move_with_retry()` wrapper around `shutil.move` with up to 3 retries (500ms delay) when a `PermissionError` indicates a locked file. Each retry attempt is logged. After exhausting all attempts the exception propagates to the existing emergency rollback.
+- Why: Multi-threaded file operations hit transient lock conflicts when another process (antivirus, downloader, indexer) holds the file open. The old code immediately rolled back everything on a single `PermissionError`. Retry logic absorbs transient conflicts, only rolling back when a lock truly persists.
+
 ## 4. Complete Roadmap
 
 ### Implemented
@@ -102,10 +106,10 @@ The codebase is modular and strictly separates the UI (CLI/Menu) from the busine
 - Configuration validation with fallback.
 - Progress reporting.
 - Type hints across codebase.
+- Wait-and-retry for locked files.
 
 ### In Progress (Targeting v1.9.0 - Sanity & Resilience)
 - Runtime Environment Checks. Verify read/write permissions before spinning up threads.
-- Graceful Recovery. Implement a wait-and-retry decorator for `PermissionError` on locked files.
 - Path Traversal Protection. Ensure users cannot pass relative paths like `../../Windows/System32` into the source argument.
 
 ### Planned (Targeting v2.0.0+)
@@ -235,7 +239,7 @@ BroccoliFlow/
 
 **The JSON Bomb:** If `categories.json` is manually edited by the user and they miss a comma, the app crashes on startup. (Partially fixed in v1.8.0 via `_validate_categories` in `categories.py` which falls back to defaults with a warning. However, the validation only runs on load, not on save).
 
-**Locked File Crash:** If another application is actively writing to a file (like a downloading video), `shutil.move` throws a `PermissionError` and triggers an immediate rollback. It needs retry logic with exponential backoff.
+**Locked File Crash:** If another application is actively writing to a file (like a downloading video), `shutil.move` throws a `PermissionError` and triggers an immediate rollback. (Partially fixed in v1.9.0: `_move_with_retry` retries 3 times with 500ms delay before propagating the exception).
 
 **Orphaned Log Files:** If a user moves `broccoliflow_last_operation.json` manually out of the directory, they lose the ability to undo.
 
@@ -259,8 +263,6 @@ BroccoliFlow/
 
 **Schema Validator:** A startup check that confirms `categories.json` is a valid dictionary containing only lists of strings. (Partially implemented in v1.8.0 via `_validate_categories`).
 
-**Wait-and-Retry Decorator:** A wrapper around `shutil.move` that pauses for 500ms and retries if it hits an OS lock. Priority is high.
-
 **Recursive Scanning:** Allowing users to organize highly nested folders. Priority is medium. It requires careful handling to avoid infinite recursion on symlinks.
 
 ## 17. Current Conversation Dump
@@ -279,11 +281,19 @@ We decided the next move is v1.9.0, focusing strictly on stability. Specifically
 
 We discussed moving from web LLMs to OpenCode (local desktop LLM) to maintain context window control.
 
-## 18. Complete Context Preservation
+## 18. v1.9.0 - Completed Work
 
-This document contains everything. Every decision, architecture setup, bug, and future roadmap item has been written here directly. You do not need any hidden chat history. You are fully equipped to read the current .py files in the workspace, cross-reference them with this document, and immediately begin building the resilience features for v1.9.0. Do not ask for previous context. Act on this document alone.
+The wait-and-retry decorator (`_move_with_retry`) is implemented in `organizer.py`. It wraps `shutil.move` with up to 3 retries at 500ms intervals when `PermissionError` is raised, logging each attempt. After exhaustion the exception propagates to the existing rollback handler.
 
-## 19. Glossary of Important Terminology
+Remaining for v1.9.0:
+- Runtime Environment Checks (read/write permission verification)
+- Path Traversal Protection
+
+## 19. Complete Context Preservation
+
+This document contains everything. Every decision, architecture setup, bug, and future roadmap item has been written here directly. You do not need any hidden chat history. You are fully equipped to read the current .py files in the workspace, cross-reference them with this document, and immediately continue building the resilience features for v1.9.0. Do not ask for previous context. Act on this document alone.
+
+## 20. Glossary of Important Terminology
 
 - **Operation Log:** The `broccoliflow_last_operation.json` file written to the target directory after a successful organization run. Contains a list of `{"source": "...", "destination": "..."}` objects.
 - **Dry Run:** A simulation mode that prints intended file movements without modifying the filesystem.

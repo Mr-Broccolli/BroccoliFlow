@@ -90,6 +90,23 @@ def organize_files(folder: Path, dry_run: bool = False, max_workers: int = 8) ->
     renamed_files = 0
     operation_log = []
     
+    def _move_with_retry(src: str, dst: str, max_retries: int = 3,
+                         delay: float = 0.5) -> None:
+        """Move a file with retry logic for PermissionError (locked files)."""
+        for attempt in range(1, max_retries + 1):
+            try:
+                shutil.move(src, dst)
+                return
+            except PermissionError:
+                if attempt == max_retries:
+                    raise
+                logger.warning(
+                    f"PermissionError moving {Path(src).name} "
+                    f"(attempt {attempt}/{max_retries}). "
+                    f"Retrying in {delay}s..."
+                )
+                time.sleep(delay)
+
     def process_file(task_data: Tuple[Path, Path]) -> Dict[str, Any]:
         """Worker function for concurrent file processing."""
         source_file, dest_folder = task_data
@@ -97,7 +114,7 @@ def organize_files(folder: Path, dry_run: bool = False, max_workers: int = 8) ->
         final_destination = get_available_filename(original_destination)
         is_renamed = final_destination != original_destination
         try:
-            shutil.move(str(source_file), str(final_destination))
+            _move_with_retry(str(source_file), str(final_destination))
             logger.debug(f"Moved: {source_file.name} -> {final_destination.parent.name}/{final_destination.name}")
             return {
                 "source": str(source_file),
