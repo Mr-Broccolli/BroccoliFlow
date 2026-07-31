@@ -1,6 +1,8 @@
 from config import DEFAULT_CATEGORIES
-from typing import Dict, List
 from pathlib import Path
+from typing import Dict, List
+import sys
+
 
 def get_category(extension: str, active_categories: Dict[str, List[str]]) -> str:
     for category, extensions in active_categories.items():
@@ -8,6 +10,7 @@ def get_category(extension: str, active_categories: Dict[str, List[str]]) -> str
             return category
 
     return "Misc"
+
 
 def get_available_filename(destination_file: Path) -> Path:
     if not destination_file.exists():
