@@ -7,6 +7,7 @@ from organizer import organize_files
 from undo import undo_last_operation
 from categories import category_menu
 from config import VERSION
+from utils import validate_source_path
 
 def run_menu() -> NoReturn:
     """Main interactive menu logic."""
@@ -27,7 +28,13 @@ def run_menu() -> NoReturn:
             folder_path = input("\nEnter folder path: ").strip()
             folder = Path(folder_path)
             if folder.exists() and folder.is_dir():
-                organize_files(folder)
+                try:
+                    validate_source_path(folder)
+                except ValueError as e:
+                    logger.warning(f"User provided invalid path: {folder_path} ({e})")
+                    print(f"\nError: {e}")
+                else:
+                    organize_files(folder)
             else:
                 logger.warning(f"User provided invalid path: {folder_path}")
                 print("\nInvalid folder path.")
@@ -36,7 +43,13 @@ def run_menu() -> NoReturn:
             folder_path = input("\nEnter folder path: ").strip()
             folder = Path(folder_path)
             if folder.exists() and folder.is_dir():
-                undo_last_operation(folder)
+                try:
+                    validate_source_path(folder)
+                except ValueError as e:
+                    logger.warning(f"User provided invalid path for undo: {folder_path} ({e})")
+                    print(f"\nError: {e}")
+                else:
+                    undo_last_operation(folder)
             else:
                 logger.warning(f"User provided invalid path for undo: {folder_path}")
                 print("\nInvalid folder path.")
@@ -79,6 +92,13 @@ def main() -> NoReturn:
         if not folder.exists() or not folder.is_dir():
             logger.error(f"CLI Error: {args.source} is not a valid directory.")
             print(f"Error: {args.source} is not a valid directory.")
+            sys.exit(1)
+
+        try:
+            validate_source_path(folder)
+        except ValueError as e:
+            logger.error(f"CLI Error: {e}")
+            print(f"Error: {e}")
             sys.exit(1)
 
         try:
